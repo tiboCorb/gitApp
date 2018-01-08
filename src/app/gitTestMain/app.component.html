@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+      <div class="row">
+        
+        <div class="col-lg-2">
+          
+          <a class="navbar-brand">Project gitHub</a>
+        </div>
+        <div class="col-lg-7">
+          <div id="navbar" class="collapse navbar-collapse">
+            <form>
+                <div class="input-group">
+                    <input  #url
+                     class="form-control"  
+                     placeholder="https://github.com/stadline/js-technical-test"
+                     (keyup.enter)="setUrl(url.value)"
+                     value="">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" (click)="setUrl(url.value)"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container-fluid app">
+  <div class="row">
+    <div class="col-lg-7 ">
+      <ng-container style="padding-top: 300px;" *ngFor="let doc of document">
+        <div *ngIf="!isDisplayable(doc.user.login)" class="panel panel-default">
+          <div class="row card">
+            <div class="col-lg-2">
+              <img src="{{doc.user.avatar_url}}" width="100" height="100" class="img-circle">
+            </div>
+            <div class="col-lg-9">
+              <h4>{{doc.user.login}}</h4>
+              <markdown>{{doc.body}}</markdown>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      
+    </div>
+    <div class="col-lg-5 ">
+      <div class="affix">
+        <app-multipleCheckBox [userTab]="userTab" [disableUser]="disableUser" (disableUserUpdate)="onChange($event)"></app-multipleCheckBox>
+        <app-pieChart [user]="chartUser" [value]="chartValue" > </app-pieChart>
+      </div>
+    </div>
+  </div>
+</div>hg
