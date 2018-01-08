@@ -1,10 +1,14 @@
-<div class="row">
-    <h4>Nb d'utilisateur </h4>
-    <br>
-    <span>{{nbUtilisateur}}</span>
-</div>
-<div class="row">
-    <h4>Nb de message </h4>
-    <br>
-    <span>{{nbMessage}}</span>
-</div>
+<ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+     NB User :
+      <span class="badge badge-primary badge-pill">{{user?.length}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+       NB msg:
+      <span class="badge badge-primary badge-pill">{{getCountOfMessage()}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Talkativiest user:
+      <span >{{findTalkativiestUser()}}</span>
+    </li>
+  </ul>

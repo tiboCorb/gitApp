@@ -3,13 +3,12 @@
         <h3 class="panel-title">chart</h3>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top : 10px">
             <div class="col-lg-4" >
                 <app-stats [user]="user" [value]="value"></app-stats>
             </div>
             <div class="col-lg-8">
-                <canvas baseChart [data]="value" [labels]="user" [legend]="false" [colors]="color" [chartType]="'pie'" (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
+                <canvas baseChart [data]="value" [labels]="user" [legend]="false" [colors]="color" [chartType]="'pie'" ></canvas>
             </div>
         </div>
     </div>

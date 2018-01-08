@@ -14,19 +14,11 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 export class Stats {
     @Input()user : Array < string >;
     @Input()value : Array < number >;
-    public nbUtilisateur : number;
-    public nbMessage : number;
-    public talkativiestUser : string;
-
+   
+   
     constructor() {}
 
     ngOnInit() {
-
-        if (this.user.length !== 0) {
-
-            this.nbMessage = this.getCountOfMessage();
-            this.talkativiestUser = this.findTalkativiestUser();
-        }
     }
 
     /**
@@ -38,7 +30,6 @@ export class Stats {
         if(this.user.length !== 0) {
 
             const index = this.hightestValue();
-            console.log(index);
             if (index !== -1) {
 
                 return this.user[index];
@@ -76,10 +67,11 @@ export class Stats {
      * @returns total sum of each square of 'value'
      */
     private getCountOfMessage() {
-        let count : number
-        this.nbUtilisateur = this.user.length;
-        for (let i = 0; i < this.nbUtilisateur; i++) {
-            count += this.value[i];
+        let count : number =0;
+       ;
+        for (let i = 0; i <  this.user.length; i++) {
+         
+            count = count + this.value[i];
         }
         return count;
     }
