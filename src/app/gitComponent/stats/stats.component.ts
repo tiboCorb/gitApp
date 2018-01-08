@@ -26,7 +26,7 @@ export class Stats {
      * in the value tab and return it's label
      * @returns label linked with the hightest Value
      */
-    private findTalkativiestUser() : string {
+    public findTalkativiestUser() : string {
         if(this.user.length !== 0) {
 
             const index = this.hightestValue();
@@ -66,7 +66,7 @@ export class Stats {
      * it
      * @returns total sum of each square of 'value'
      */
-    private getCountOfMessage() {
+    public getCountOfMessage() {
         let count : number =0;
        ;
         for (let i = 0; i <  this.user.length; i++) {
