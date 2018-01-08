@@ -50,9 +50,9 @@
     </div>
     <div class="col-lg-5 ">
       <div class="affix">
-        <app-multipleCheckBox [userTab]="userTab" [disableUser]="disableUser" (disableUserUpdate)="onChange($event)"></app-multipleCheckBox>
+        <app-multipleCheckBox *ngIf="userTab.length>0" [userTab]="userTab" [disableUser]="disableUser" (disableUserUpdate)="onChange($event)"></app-multipleCheckBox>
         <app-pieChart *ngIf="chartUser.length>0 && chartValue.length >0" [user]="chartUser" [value]="chartValue" > </app-pieChart>
       </div>
     </div>
   </div>
-</div>hg
+</div>

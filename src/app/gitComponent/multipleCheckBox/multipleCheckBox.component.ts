@@ -1,4 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
+import { OnChanges, SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+
 
 @Component({selector: 'app-multipleCheckBox',
             templateUrl: './multipleCheckBox.component.html',
@@ -12,13 +14,15 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
  * @returns disableUserUpdate is the updated list of disable label
  */
 
-export class MultipleCheckBox {
+export class MultipleCheckBox implements OnChanges {
 
   @Input()userTab : Array < string >;
   @Input()disableUser : Array < string >;
   @Output()disableUserUpdate = new EventEmitter();
 
   constructor() {}
+
+  ngOnChanges(changes : SimpleChanges){}
 
   /**
      * isDisplayable is use in the template
