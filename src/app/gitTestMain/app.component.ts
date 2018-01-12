@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 
 import { MultipleCheckBox } from '../gitComponent/multipleCheckBox/multipleCheckBox.component';
 import { PieChart } from '../gitComponent/pieChart/pieChart.component';
+import { PostComment } from '../gitComponent/postComment/postComment.component'
 import { GitHub } from '../service/github.service';
 
 
@@ -24,6 +25,7 @@ export class AppComponent {
   public disableUser : Array<string>;
   public chartUser : Array<string>;
   public chartValue : Array<number>;
+  public token : string;
 
   
  
@@ -33,6 +35,7 @@ export class AppComponent {
     this.chartValue = new Array();
     this.chartUser = new Array();
     this.disableUser=new Array()
+    this.token='';
    }
 
   
@@ -82,12 +85,25 @@ export class AppComponent {
  * onChange apply the changes to the app's components
  * @param event 
  */
- public onChange(event : Event): void {
+ public onChangeCheckBox(event : Event): void {
     this.chartValue = new Array()
     setTimeout( () => {this.chartUser = new Array()});
     this.userTab = new Array();
     this.initPie();
   }
+  
+  /**
+ * onChange apply the changes to the app's components
+ * @param event 
+ */
+ public onChangePostComment(event : Event): void {
+    this.github.postComment(this.token,event).subscribe(res=>{
+
+    })
+  }
+
+
+
 
   /**
    * setUrl call gitHub service to realaod 
@@ -103,6 +119,10 @@ export class AppComponent {
       setTimeout( () => {this.chartUser = new Array()});
       this.initPie();
     });
+  }
+
+  public setToken(value : string){
+    this.token=value;
   }
   
 }

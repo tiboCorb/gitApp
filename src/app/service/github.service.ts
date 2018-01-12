@@ -42,13 +42,17 @@ export class GitHub {
    * to the github api
    * @param comment message to post
    * 
-   * not working yet
    */
-  postComment(comment : string){
+  postComment( token:string ,comment :any){
+    var toto = {
+      "body" : comment
+    };
     return this.http
-    .post('https://github.com/jenaye/Tipnturn-front/issues/9',comment 
-         
-  );
+            .post('https://api.github.com/repos/jenaye/Tipnturn-front/issues/9/comments?access_token='+token+'', toto)
+            	.map((res: Response) => {
+                	return res.json();
+            });
+
 }
 
 

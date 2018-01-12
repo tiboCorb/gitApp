@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Stats} from '../stats/stats.component';
 
 @Component({selector: 'app-pieChart',
