@@ -11,8 +11,10 @@ import { AppComponent } from './gitTestMain/app.component';
 import { MultipleCheckBox } from './gitComponent/multipleCheckBox/multipleCheckBox.component';
 import { PieChart } from './gitComponent/pieChart/pieChart.component';
 import { Stats } from './gitComponent/stats/stats.component';
+import { PostComment } from './gitComponent/postComment/postComment.component'
 
 import { GitHub } from './service/github.service';
+
 
 
 
@@ -21,7 +23,8 @@ import { GitHub } from './service/github.service';
     AppComponent,
     MultipleCheckBox,
     PieChart,
-    Stats
+    Stats,
+    PostComment
   ],
   imports: [
     BrowserModule,

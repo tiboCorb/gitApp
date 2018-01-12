@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">add a comment</h3>
+    </div>
+    <div  class="panel-body">
+        <input #newComment (keyup.enter)="addComment(newComment.value)" (blur)="addComment(newComment.value); newComment.value='' ">
+        <button (click)="addComment(newComment.value)">Post</button>
+    </div>
+</div>
+<ng-template #other_content>
+    <div class="panel-body">
+
+    </div>
+</ng-template>
+<!-- *ngIf="token.length>0;else other_content" -->

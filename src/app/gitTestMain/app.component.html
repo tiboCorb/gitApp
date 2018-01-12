@@ -23,7 +23,20 @@
                     </div>
                 </div>
             </form>
+            <form>
+                <div class="input-group">
+                    <input  #token
+                     class="form-control"  
+                     placeholder="token"
+                     (keyup.enter)="setToken(token.value)"
+                     value="">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" (click)="setToken(token.value)"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
           </div>
+
         </div>
       </div>
     </div>
@@ -50,8 +63,9 @@
     </div>
     <div class="col-lg-5 ">
       <div class="affix">
-        <app-multipleCheckBox *ngIf="userTab.length>0" [userTab]="userTab" [disableUser]="disableUser" (disableUserUpdate)="onChange($event)"></app-multipleCheckBox>
+        <app-multipleCheckBox *ngIf="userTab.length>0" [userTab]="userTab" [disableUser]="disableUser" (disableUserUpdate)="onChangeCheckBox($event)"></app-multipleCheckBox>
         <app-pieChart *ngIf="chartUser.length>0 && chartValue.length >0" [user]="chartUser" [value]="chartValue" > </app-pieChart>
+        <app-postComment (comment)="onChangePostComment($event)"></app-postComment>
       </div>
     </div>
   </div>
