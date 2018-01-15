@@ -12,3 +12,10 @@
   .input-group{
     margin-top: 10px
   }
+
+  .customModal{
+    position:fixed !important;
+    top:30% !important;
+    right: 30% !important;
+    z-index: 1000;
+  }
