@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {MultipleCheckBox} from '../gitComponent/multipleCheckBox/multipleCheckBox.component';
-import {PieChart} from '../gitComponent/pieChart/pieChart.component';
-import {PostComment} from '../gitComponent/postComment/postComment.component'
-import {Message} from '../gitComponent/message/message.component'
-import {GitHub} from '../service/github.service';
-import {OnChanges} from '@angular/core/src/metadata/lifecycle_hooks';
+import { MultipleCheckBox } from '../gitComponent/multipleCheckBox/multipleCheckBox.component';
+import { PieChart } from '../gitComponent/pieChart/pieChart.component';
+import { PostComment } from '../gitComponent/postComment/postComment.component'
+import { Message } from '../gitComponent/message/message.component'
+import { GitHub } from '../service/github.service';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
-@Component({selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.css']})
+@Component({ selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.css'] })
 
 /**
  * AppComponent is the main class of this app
@@ -17,24 +17,25 @@ import {OnChanges} from '@angular/core/src/metadata/lifecycle_hooks';
 
 export class AppComponent implements OnChanges {
 
-  public document : any;
-  public userTab : Array < string >;
-  public disableUser : Array < string >;
-  public chartUser : Array < string >;
-  public chartValue : Array < number >;
-  public token : string;
-  public message : string;
-  public title : string;
-  public showDialog : boolean;
+  public document: any;
+  public info: any;
+  public userTab: Array<string>;
+  public disableUser: Array<string>;
+  public chartUser: Array<string>;
+  public chartValue: Array<number>;
+  public token: string;
+  public message: string;
+  public title: string;
+  public showDialog: boolean;
 
-  private defaultURL : string = "https://github.com/nodejs/node/issues/17709";
-  private curentURL : string;
+  private defaultURL = "https://github.com/nodejs/node/issues/17709";
+  private curentURL: string;
 
-  constructor(private github : GitHub) {
+  constructor(private github: GitHub) {
     this.userTab = new Array();
     this.chartValue = new Array();
     this.chartUser = new Array();
-    this.disableUser = new Array()
+    this.disableUser = new Array();
     this.token = '';
     this.message = '';
     this.title = '';
@@ -49,21 +50,31 @@ export class AppComponent implements OnChanges {
         .getDataFromUrl(this.defaultURL)
         .subscribe(res => {
           if (res.status) {
-            this.title = "Loading error"
-            this.message = "you may have overpass your number of github query for today please retry later. "
+            this.title = 'Loading error';
+            this.message = 'you may have overpass your number of github query for today please retry later. ';
             this.showDialog = true;
           }
           this.document = res;
-          this.initPie();
+          this.github.getIssueInfoFromUrl(this.defaultURL).subscribe(res => {
+            if (res.status) {
+              this.title = 'Loading error';
+              this.message = 'you may have overpass your number of github query for today please retry later. ';
+              this.showDialog = true;
+            }
+            this.info = res;
+            this.initPie();
+          });
         });
+
+
     } else {
       this
         .github
         .getDataFromUrl(this.curentURL)
         .subscribe(res => {
           if (res.status) {
-            this.title = "Loading error"
-            this.message = "you may have overpass your number of github query for today please retry later. "
+            this.title = 'Loading error'
+            this.message = 'you may have overpass your number of github query for today please retry later. '
             this.showDialog = true;
           }
           this.document = res;
@@ -71,15 +82,16 @@ export class AppComponent implements OnChanges {
         });
     }
   }
-  ngOnChanges() {}
+  ngOnChanges() { }
 
   /**
    * provide the the pie chart a tab of
    * label and value without the disable user
    */
-  initPie() : void {
-    let tmpVal: Array < number >= [];
-
+  initPie(): void {
+    const tmpVal: Array<number> = [];
+    this.userTab.push(this.info.user.login);
+    tmpVal.push(1);
     this
       .document
       .forEach(element => {
@@ -104,9 +116,9 @@ export class AppComponent implements OnChanges {
           this.chartValue = [
             ...this.chartValue,
             tmpVal[
-              this
-                .userTab
-                .indexOf(user)
+            this
+              .userTab
+              .indexOf(user)
             ]
           ];
         }
@@ -122,11 +134,11 @@ export class AppComponent implements OnChanges {
               user
             ];
           }
-        })
+        });
     });
   }
 
-  isDisplayable(doc : any) : boolean {
+  isDisplayable(doc: any): boolean {
     return this
       .disableUser
       .includes(doc);
@@ -136,10 +148,10 @@ export class AppComponent implements OnChanges {
  * onChangeCheckBox apply the changes to the app's components
  * @param event
  */
-  public onChangeCheckBox(event : Event) : void {
+  public onChangeCheckBox(event: Event): void {
     this.chartValue = new Array();
     setTimeout(() => {
-      this.chartUser = new Array()
+      this.chartUser = new Array();
     });
     this.userTab = new Array();
     this.initPie();
@@ -149,29 +161,29 @@ export class AppComponent implements OnChanges {
  * onChangePostComment sent the message to github service
  * @param event
  */
-  public onChangePostComment(event : Event) : void {
-    if(this.curentURL === '') {
+  public onChangePostComment(event: Event): void {
+    if (this.curentURL === '') {
       this
         .github
         .postComment(this.token, event)
         .subscribe(res => {
           if (res.status) {
-            this.title = "Token invalide"
-            this.message = "you need a valid token to post a comment"
+            this.title = 'Token invalide';
+            this.message = 'you need a valid token to post a comment';
             this.showDialog = true;
           }
-        })
+        });
     } else {
       this
         .github
         .postCommentToUrl(this.token, event, this.curentURL)
         .subscribe(res => {
           if (res.status) {
-            this.title = "Token invalide"
-            this.message = "you need a valid token to post a comment"
+            this.title = 'Token invalide';
+            this.message = 'you need a valid token to post a comment';
             this.showDialog = true;
           }
-        })
+        });
     }
   }
 
@@ -180,29 +192,29 @@ export class AppComponent implements OnChanges {
    * other data their is no control of the url yet
    * @param value  new URL
    */
-  public setUrl(value : string) {
+  public setUrl(value: string) {
     this.disableUser = new Array();
     this
       .github
       .getDataFromUrl(value)
       .subscribe(res => {
         if (res.status) {
-          this.title = "URL invalide"
-          this.message = "it must be like folowing : https://github.com/USER_NAME/REPO/issues/NUMBER_OF_ISSUE"
+          this.title = 'URL invalide';
+          this.message = 'it must be like folowing : https://github.com/USER_NAME/REPO/issues/NUMBER_OF_ISSUE';
           this.showDialog = true;
         } else {
           this.document = res;
           this.userTab = new Array();
-          this.chartValue = new Array()
+          this.chartValue = new Array();
           setTimeout(() => {
-            this.chartUser = new Array()
+            this.chartUser = new Array();
           });
           this.initPie();
         }
       });
   }
 
-  public setToken(value : string) {
+  public setToken(value: string) {
     this.token = value;
   }
 
