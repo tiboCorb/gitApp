@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { MultipleCheckBox } from '../gitComponent/multipleCheckBox/multipleCheckBox.component';
-import { PieChart } from '../gitComponent/pieChart/pieChart.component';
-import { PostComment } from '../gitComponent/postComment/postComment.component'
-import { Message } from '../gitComponent/message/message.component'
-import { GitHub } from '../service/github.service';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import {MultipleCheckBox} from '../gitComponent/multipleCheckBox/multipleCheckBox.component';
+import {PieChart} from '../gitComponent/pieChart/pieChart.component';
+import {PostComment} from '../gitComponent/postComment/postComment.component'
+import {Message} from '../gitComponent/message/message.component'
+import {GitHub} from '../service/github.service';
+import {OnChanges} from '@angular/core/src/metadata/lifecycle_hooks';
 
-@Component({ selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.css'] })
+
+@Component({selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.css']})
 
 /**
  * AppComponent is the main class of this app
@@ -17,21 +18,21 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 export class AppComponent implements OnChanges {
 
-  public document: any;
-  public info: any;
-  public userTab: Array<string>;
-  public disableUser: Array<string>;
-  public chartUser: Array<string>;
-  public chartValue: Array<number>;
-  public token: string;
-  public message: string;
-  public title: string;
-  public showDialog: boolean;
+  public document : any;
+  public info : any;
+  public userTab : Array < string >;
+  public disableUser : Array < string >;
+  public chartUser : Array < string >;
+  public chartValue : Array < number >;
+  public token : string;
+  public message : string;
+  public title : string;
+  public showDialog : boolean;
 
   private defaultURL = "https://github.com/nodejs/node/issues/17709";
-  private curentURL: string;
+  private curentURL : string;
 
-  constructor(private github: GitHub) {
+  constructor(private github : GitHub) {
     this.userTab = new Array();
     this.chartValue = new Array();
     this.chartUser = new Array();
@@ -55,17 +56,19 @@ export class AppComponent implements OnChanges {
             this.showDialog = true;
           }
           this.document = res;
-          this.github.getIssueInfoFromUrl(this.defaultURL).subscribe(res => {
-            if (res.status) {
-              this.title = 'Loading error';
-              this.message = 'you may have overpass your number of github query for today please retry later. ';
-              this.showDialog = true;
-            }
-            this.info = res;
-            this.initPie();
-          });
+          this
+            .github
+            .getIssueInfoFromUrl(this.defaultURL)
+            .subscribe(res => {
+              if (res.status) {
+                this.title = 'Loading error';
+                this.message = 'you may have overpass your number of github query for today please retry later. ';
+                this.showDialog = true;
+              }
+              this.info = res;
+              this.initPie();
+            });
         });
-
 
     } else {
       this
@@ -82,20 +85,21 @@ export class AppComponent implements OnChanges {
         });
     }
   }
-  ngOnChanges() { }
+  ngOnChanges() {}
 
   /**
    * provide the the pie chart a tab of
    * label and value without the disable user
    */
-  initPie(): void {
-    const tmpVal: Array<number> = [];
-    this.userTab.push(this.info.user.login);
+  initPie() : void {
+    const tmpVal: Array < number > = [];
+    this
+      .userTab
+      .push(this.info.user.login);
     tmpVal.push(1);
     this
       .document
       .forEach(element => {
-
         if (element.user && this.userTab.includes(element.user.login)) {
           tmpVal[
             this
@@ -116,9 +120,9 @@ export class AppComponent implements OnChanges {
           this.chartValue = [
             ...this.chartValue,
             tmpVal[
-            this
-              .userTab
-              .indexOf(user)
+              this
+                .userTab
+                .indexOf(user)
             ]
           ];
         }
@@ -138,7 +142,7 @@ export class AppComponent implements OnChanges {
     });
   }
 
-  isDisplayable(doc: any): boolean {
+  isDisplayable(doc : any) : boolean {
     return this
       .disableUser
       .includes(doc);
@@ -148,7 +152,7 @@ export class AppComponent implements OnChanges {
  * onChangeCheckBox apply the changes to the app's components
  * @param event
  */
-  public onChangeCheckBox(event: Event): void {
+  public onChangeCheckBox(event : Event) : void {
     this.chartValue = new Array();
     setTimeout(() => {
       this.chartUser = new Array();
@@ -161,8 +165,8 @@ export class AppComponent implements OnChanges {
  * onChangePostComment sent the message to github service
  * @param event
  */
-  public onChangePostComment(event: Event): void {
-    if (this.curentURL === '') {
+  public onChangePostComment(event : Event) : void {
+    if(this.curentURL === '') {
       this
         .github
         .postComment(this.token, event)
@@ -192,7 +196,7 @@ export class AppComponent implements OnChanges {
    * other data their is no control of the url yet
    * @param value  new URL
    */
-  public setUrl(value: string) {
+  public setUrl(value : string) {
     this.disableUser = new Array();
     this
       .github
@@ -204,17 +208,32 @@ export class AppComponent implements OnChanges {
           this.showDialog = true;
         } else {
           this.document = res;
-          this.userTab = new Array();
-          this.chartValue = new Array();
-          setTimeout(() => {
-            this.chartUser = new Array();
-          });
-          this.initPie();
+          console.log(this.document);
+          this
+            .github
+            .getIssueInfoFromUrl(value)
+            .subscribe(res => {
+             
+              if (res.status) {
+                this.title = 'Loading error';
+                this.message = 'you may have overpass your number of github query for today please retry later. ';
+                this.showDialog = true;
+              } else {
+                this.info = res;
+                this.userTab = new Array();
+                this.chartValue = new Array();
+                setTimeout(() => {
+                  this.chartUser = new Array();
+                });
+                this.initPie();
+              }
+            });
+
         }
       });
   }
 
-  public setToken(value: string) {
+  public setToken(value : string) {
     this.token = value;
   }
 

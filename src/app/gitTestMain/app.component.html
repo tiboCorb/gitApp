@@ -52,7 +52,7 @@
     </div>
     <div class="row">
       <div class="col-lg-7 ">
-        <div *ngIf="!isDisplayable(info.user.login)" class="panel panel-default">
+        <div *ngIf="(info?.user && !isDisplayable(info.user.login))" class="panel panel-default">
           <div class="row card">
             <div class="col-lg-2">
               <img src="{{info.user.avatar_url}}" width="100" height="100" class="img-circle">
@@ -64,7 +64,7 @@
           </div>
         </div>
         <ng-container *ngFor="let doc of document">
-          <div *ngIf="!isDisplayable(doc.user.login)" class="panel panel-default">
+          <div *ngIf="(doc?.user && !isDisplayable(doc.user.login))" class="panel panel-default">
             <div class="row card">
               <div class="col-lg-2">
                 <img src="{{doc.user.avatar_url}}" width="100" height="100" class="img-circle">
