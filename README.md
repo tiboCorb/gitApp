@@ -1,5 +1,5 @@
 # AppGitTest
-
+![alt text](https://github.com/tiboCorb/gitApp/edit/master/screenShoot.JPG)
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.2.
 
 ## Development server
